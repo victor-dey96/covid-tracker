@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import CountUp from "react-countup";
+
 import "./Cards.css";
 
 function Cards({ condition, data, style, text }) {
