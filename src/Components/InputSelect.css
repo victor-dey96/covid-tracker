@@ -1,0 +1,19 @@
+.actualSelectOption {
+  display: flex;
+  cursor: pointer;
+  flex: 1;
+  border: none;
+  background-color: transparent;
+  color: #333;
+  height: 2em;
+  font-size: 1rem;
+  margin-top: 10px;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 7px 25px #333;
+  padding: 1em 1.5em;
+  appearance: none;
+  width: 15em;
+}
+.selectOption {
+  cursor: pointer;
+}

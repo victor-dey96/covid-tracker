@@ -1,64 +1,58 @@
-import React, {useState, useEffect} from 'react'
+import React from "react";
+import { Select } from "@material-ui/core";
+import { useState, useEffect } from "react";
+import "./InputSelect.css";
 
-import axios from './axios'
-function InputSelect() {
+function InputSelect({ eachCountryData }) {
+  //destructuring the props
 
-    const [countries, setCountries] = useState([]) //array of countries
-    const [inputValue, setInputValue] = useState('') //to store the input value as a state
-    const [totalData, setTotalData] = useState() //to get the final confirmed value of individually selected country
-    const baseURL = 'https://covid19.mathdro.id/api'
-    useEffect(() => {
-        async function fetchData(){
-            const countryValue = await axios.get(`${baseURL}/countries/`)
-           
-            setCountries(countryValue.data.countries.map(
-                function(country){
-                    return country
-                }
-                // This returns an array of name of all countries
-                
-            ))
-            
-            
-        }
-        
-        fetchData()
-    }, [])
+  const [countries, setCountries] = useState([]);
+  const [country, setCountry] = useState("Afghanistan");
 
+  useEffect(() => {
+    const getCountries = async () => {
+      await fetch("https://disease.sh/v3/covid-19/countries")
+        .then((res) => res.json())
+        .then((data) => {
+          const countries = data.map((country) => ({
+            id: country.country,
+            value: country.country,
+            key: country.countryInfo.iso2,
+            cases: country.cases,
+            deaths: country.deaths,
+            recovered: country.recovered,
+          }));
+          setCountries(countries); // contains all the data for all the countries
+          eachCountryData(...countries.filter((item) => item.id === country)); //defining what eachCountryData does
+        });
+    };
+    getCountries();
+  }, [country]);
+  //   console.log(countries[0].id);
+  const handleChange = (e) => {
+    setCountry(e.target.value); // contains state for selected country as input
+  };
 
-    useEffect(() => {
-        async function fetchData(){
-            const countryData = await axios.get(`${baseURL}/countries/${inputValue}`)
-            setTotalData(countryData.data)
-            
-            
-        }
-        fetchData()
-    }, [inputValue])
-
-console.log(totalData)
-
-const handleChange = (e) => {
-    setInputValue(e.target.value) //stores the selected option as inputValue
+  return (
+    <div className="selectOption">
+      <Select
+        defaultValue={"Afghanistan"}
+        className="actualSelectOption"
+        onChange={handleChange}
+      >
+        {countries.map((country) => (
+          <option
+            className="selectOption"
+            value={country.value}
+            key={country.id}
+          >
+            {country.value}
+          </option>
+        ))}
+        {/* {} */}
+      </Select>
+    </div>
+  );
 }
-    return (
-        <div>
-            
-            <select onChange={handleChange} >
-                
-                {countries.map((option) => {
-                    return <option value={option.name}>{option.name}</option>
-                        
-                })}
-            </select>
-             
-        </div>
-    )
-}
 
-export default InputSelect
-// <option 
-                        //     onChange={{handleChange}}
-                        //     selected= {index===0}
-                        //     value={option.iso3}> {option.name} 
-                        // </option>
+export default InputSelect;

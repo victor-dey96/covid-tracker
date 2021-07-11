@@ -11,7 +11,7 @@ body {
   width: 300px;
   margin: 25px;
   transition: all 0.5s ease;
-  box-shadow: 5px 5px 10px grey;
+  box-shadow: 0 7px 25px #333;
 }
 .cards_text {
   display: flex;
@@ -30,13 +30,20 @@ body {
   padding: 0;
   margin: 10px;
   margin-bottom: 0;
+  font-weight: bolder;
+  font-size: 20px;
+  font-family: sans-serif;
+  color: #3b4151;
 }
 .cards_text > h3 {
   display: flex;
   justify-content: left;
-  font-weight: normal;
   padding: 0;
   margin: 12px;
+  font-weight: bolder;
+  font-size: 15px;
+  font-family: sans-serif;
+  color: #3b4151;
 }
 .Cards:hover {
   transform: scale(1.05);
